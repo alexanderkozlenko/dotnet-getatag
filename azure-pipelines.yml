@@ -1,0 +1,86 @@
+variables:
+- name: 'Build.ProjectPath'
+  value: '$(Build.SourcesDirectory)/global.proj'
+stages:
+- stage: Pack
+  dependsOn: []
+  jobs:
+  - job: Release
+    steps:
+    - task: UseDotNet@2
+      displayName: 'dotnet.use.sdk'
+      inputs:
+        useGlobalJson: true
+        workingDirectory: '$(Build.SourcesDirectory)'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet.build'
+      inputs:
+        command: custom
+        custom: build
+        arguments: '$(Build.ProjectPath) -v $(DOTNET_VERBOSITY) -c Release -p:ContinuousIntegrationBuild=true -p:BuildNumber=$(Build.BuildNumber)'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet.pack'
+      inputs:
+        command: custom
+        custom: pack
+        arguments: '$(Build.ProjectPath) -v $(DOTNET_VERBOSITY) -c Release -p:ContinuousIntegrationBuild=true -p:BuildNumber=$(Build.BuildNumber) --no-build -o $(Build.ArtifactStagingDirectory)'
+    - task: PublishPipelineArtifact@1
+      displayName: 'artifact.publish'
+      inputs:
+        artifactName: 'packages'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+- stage: Test
+  dependsOn: []
+  condition: eq(variables['Build.SkipTest'], '')
+  jobs:
+  - job: Release
+    steps:
+    - task: UseDotNet@2
+      displayName: 'dotnet.use.sdk'
+      inputs:
+        useGlobalJson: true
+        workingDirectory: '$(Build.SourcesDirectory)'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet.build'
+      inputs:
+        command: custom
+        custom: build
+        arguments: '$(Build.ProjectPath) -v $(DOTNET_VERBOSITY) -c Release -p:BuildNumber=$(Build.BuildNumber) -p:CopyLocalLockFileAssemblies=true'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet.test'
+      inputs:
+        command: custom
+        custom: test
+        arguments: '$(Build.ProjectPath) -v $(DOTNET_VERBOSITY) -c Release -p:BuildNumber=$(Build.BuildNumber) --no-build --filter TestCategory!=System -l trx -r $(Common.TestResultsDirectory)'
+    - task: PublishTestResults@2
+      displayName: 'report.publish'
+      inputs:
+        testRunner: VSTest
+        testResultsFiles: '**/*.trx'
+        searchFolder: '$(Common.TestResultsDirectory)'
+- stage: Push
+  dependsOn:
+  - Pack
+  - Test
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SkipPush'], ''))
+  jobs:
+  - job: Release
+    steps:
+    - checkout: none
+    - task: DownloadPipelineArtifact@2
+      displayName: 'artifact.download'
+      inputs:
+        artifactName: 'packages'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+    - task: NuGetToolInstaller@1
+      displayName: 'nuget.use'
+      inputs:
+        versionSpec: '$(System.NuGet.Version)'
+    - task: NuGetCommand@2
+      displayName: 'nuget.push'
+      condition: and(succeeded(), not(canceled()))
+      inputs:
+        command: push
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+        nuGetFeedType: external
+        publishFeedCredentials: '$(System.ServiceConnection.NuGet.Staging)'

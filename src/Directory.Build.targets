@@ -1,0 +1,10 @@
+﻿<Project>
+  <Target Condition="'$(IsPackageProject)' == 'true'"
+          Name="InitializePackageUrls"
+          DependsOnTargets="$(SourceLinkUrlInitializerTargets)"
+          BeforeTargets="GenerateNuspec">
+    <PropertyGroup Condition="'$(RepositoryUrl)' != ''">
+      <PackageProjectUrl>$(RepositoryUrl.Replace('.git', ''))</PackageProjectUrl>
+    </PropertyGroup>
+  </Target>
+</Project>

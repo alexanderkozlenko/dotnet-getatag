@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6EE48F1D-2C0E-42C0-BA39-D230A8265BFE}"
+	ProjectSection(SolutionItems) = preProject
+		.globalconfig = .globalconfig
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anemonis.GetATag", "Anemonis.GetATag\Anemonis.GetATag.csproj", "{9963C257-22EE-46D7-9ACC-C89DBB4FDE20}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anemonis.GetATag.UnitTests", "Anemonis.GetATag.UnitTests\Anemonis.GetATag.UnitTests.csproj", "{9B29EB01-8809-4420-80CE-F884906CFF63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9963C257-22EE-46D7-9ACC-C89DBB4FDE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9963C257-22EE-46D7-9ACC-C89DBB4FDE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9963C257-22EE-46D7-9ACC-C89DBB4FDE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9963C257-22EE-46D7-9ACC-C89DBB4FDE20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B29EB01-8809-4420-80CE-F884906CFF63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B29EB01-8809-4420-80CE-F884906CFF63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B29EB01-8809-4420-80CE-F884906CFF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B29EB01-8809-4420-80CE-F884906CFF63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73E48C32-59A9-4B10-90C9-1015B8EC17FA}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,23 @@
+﻿<Project>
+  <PropertyGroup>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>beta</VersionSuffix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <BaseIntermediateOutputPath>$([MSBuild]::NormalizeDirectory($(MSBuildThisFileDirectory)..))obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$([MSBuild]::NormalizeDirectory($(MSBuildThisFileDirectory)..))bin\$(MSBuildProjectName)</BaseOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>none</DebugType>
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(VersionSuffix)' != '' and '$(BuildNumber)' != ''">
+    <VersionSuffix>$(VersionSuffix)-$(BuildNumber)</VersionSuffix>
+  </PropertyGroup>
+</Project>

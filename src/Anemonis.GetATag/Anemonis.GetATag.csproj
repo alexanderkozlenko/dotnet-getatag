@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RollForward>LatestMajor</RollForward>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>getatag</ToolCommandName>
+    <PackageId>dotnet-getatag</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Product><![CDATA[z-base-32 tag generator]]></Product>
+    <Authors><![CDATA[Alexander Kozlenko]]></Authors>
+    <Copyright><![CDATA[© $(Authors). All rights reserved.]]></Copyright>
+    <Description><![CDATA[A .NET tool for creating tags using z-base-32 data encoding]]></Description>
+    <PackageTags><![CDATA[base32 z-base-32 tag]]></PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SimpleBase" Version="3.0.2" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20574.7" />
+  </ItemGroup>
+</Project>
