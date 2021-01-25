@@ -16,7 +16,7 @@ namespace Anemonis.GetATag
             rootCommand.AddArgument(
                 new Argument<string?>("text", () => string.Empty, "The text to create a tag from."));
             rootCommand.AddOption(
-                new Option("--size", "The size of the tag data in bits: 8, 16, 32, 64, 128, or 256.")
+                new Option<int>("--size", "The size of the tag data in bits: 8, 16, 32, 64, 128, or 256.")
                 {
                     IsRequired = true,
                     Argument = new Argument<int>()

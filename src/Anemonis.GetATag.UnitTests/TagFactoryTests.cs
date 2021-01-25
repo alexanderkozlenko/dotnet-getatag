@@ -20,7 +20,7 @@ namespace Anemonis.GetATag.UnitTests
         }
 
         [TestMethod]
-        public void Create()
+        public void CreateWhenTextIsNotNull()
         {
             var source = "The quick brown fox jumps over the lazy dog.";
             var target = "wrfz8ay";

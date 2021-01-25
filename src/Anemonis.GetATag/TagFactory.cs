@@ -30,7 +30,7 @@ namespace Anemonis.GetATag
             var valueHash = hashAlgorithm.ComputeHash(valueBytes);
             var valueSize = Math.Min(valueHash.Length, size);
 
-            return new ReadOnlySpan<byte>(valueHash, 0, valueSize);
+            return new(valueHash, 0, valueSize);
         }
 
         private static ReadOnlySpan<byte> CreateFromRandomData(int size)
