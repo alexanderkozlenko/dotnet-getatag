@@ -2,6 +2,7 @@
 
 using System;
 using System.CommandLine;
+using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 
@@ -11,19 +12,13 @@ namespace Anemonis.GetATag
     {
         public static void Main(string[] args)
         {
-            var rootCommand = new RootCommand("Creates a tag using z-base-32 data encoding.");
+            var command = new CommandLineBuilder(new RootCommand("Creates a tag using z-base-32 data encoding."))
+                .AddArgument(new Argument<string?>("text", "The text to create a tag from."))
+                .AddOption(new Option<int>("--size", "The size of the tag data in bits: 8, 16, 32, 64, 128, or 256.") { IsRequired = true })
+                .Command;
 
-            rootCommand.AddArgument(
-                new Argument<string?>("text", () => string.Empty, "The text to create a tag from."));
-            rootCommand.AddOption(
-                new Option<int>("--size", "The size of the tag data in bits: 8, 16, 32, 64, 128, or 256.")
-                {
-                    IsRequired = true,
-                    Argument = new Argument<int>()
-                });
-
-            rootCommand.Handler = CommandHandler.Create<int, string?>(HandleCommand);
-            rootCommand.Invoke(args);
+            command.Handler = CommandHandler.Create<int, string?>(HandleCommand);
+            command.Invoke(args);
         }
 
         private static void HandleCommand(int size, string? text)

@@ -17,7 +17,9 @@ namespace Anemonis.GetATag
                 throw new ArgumentOutOfRangeException(nameof(size), size, "The value must be greater than zero.");
             }
 
-            var bytes = text is { Length: > 0 } ? CreateFromText(size, text) : CreateFromRandomData(size);
+            var bytes = text is { Length: > 0 } ?
+                CreateFromText(size, text) :
+                CreateFromRandomData(size);
 
             return Base32.ZBase32.Encode(bytes, padding: false);
         }
